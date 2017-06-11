@@ -12,6 +12,11 @@ namespace Spent
 
 			Expense = expense;
 			BindingContext = this;
-		}
-	}
+        }
+
+        private void OnCrashButtonClicked(object sender, System.EventArgs e)
+        {
+            throw new System.Exception("Testing Analytics!");
+        }
+    }
 }
