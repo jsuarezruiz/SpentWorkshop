@@ -1,6 +1,10 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
+using HockeyApp.Android;
 
 namespace Spent.Droid
 {
@@ -17,7 +21,17 @@ namespace Spent.Droid
 			Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
 			         
 			Xamarin.Forms.Forms.Init(this, bundle);
-			LoadApplication(new App());
+
+            MobileCenter.Start(AppSettings.MobileCenterId,
+                   typeof(Analytics), typeof(Crashes));
+
+            LoadApplication(new App());
 		}
-	}
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            CrashManager.Register(this, AppSettings.HockeyAppId);
+        }
+    }
 }
